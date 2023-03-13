@@ -6,10 +6,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Transform _playerTransform;
-    private Rigidbody2D _playerRB;
+    public Rigidbody2D _playerRB;
 
-    [SerializeField] private float movementSpeedY;
-    [SerializeField] private float movementSpeedX;
+    Vector2 movement;
+
+    [SerializeField] private float movementSpeed;
 
 
     // Start is called before the first frame update
@@ -22,14 +23,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float translationY = Input.GetAxis("Vertical");
-        float translationX = Input.GetAxis("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
+        movement.x = Input.GetAxisRaw("Horizontal");
 
-        translationY *= Time.deltaTime * movementSpeedY;
-        translationX *= Time.deltaTime * movementSpeedX;
+    }
 
-        _playerRB.AddForce(transform.up * translationY);
-        _playerRB.AddForce(transform.right * translationX);
+    private void FixedUpdate()
+    {
+        _playerRB.MovePosition(_playerRB.position + movement * movementSpeed * Time.fixedDeltaTime);
     }
 }
 
