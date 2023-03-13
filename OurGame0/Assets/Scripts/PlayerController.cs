@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
 
         translationY *= Time.deltaTime * movementSpeedY;
         translationX *= Time.deltaTime * movementSpeedX;
+
+        _playerRB.AddForce(transform.up * translationY);
+        _playerRB.AddForce(transform.right * translationX);
     }
 }
 
