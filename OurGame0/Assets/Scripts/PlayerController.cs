@@ -6,10 +6,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Transform _playerTransform;
+
     private Rigidbody2D _playerRB;
 
-    [SerializeField] private float movementSpeedY;
-    [SerializeField] private float movementSpeedX;
+    
+    [SerializeField] private float _movementSpeed;
+    Vector2 movement;
+
 
 
     // Start is called before the first frame update
@@ -22,11 +25,20 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         float translationY = Input.GetAxis("Vertical");
         float translationX = Input.GetAxis("Horizontal");
 
-        translationY *= Time.deltaTime * movementSpeedY;
-        translationX *= Time.deltaTime * movementSpeedX;
+        //get player's positon
+        movement.y = Input.GetAxisRaw("Vertical");
+        movement.x = Input.GetAxisRaw("Horizontal");
+    }
+
+
+    // FixedUpdate is called every fixed framerate frame
+    private void FixedUpdate()
+    {
+        //apply movement  to player
+        _playerRB.MovePosition(_playerRB.position + movement * _movementSpeed * Time.fixedDeltaTime);
     }
 }
-
